@@ -25,13 +25,11 @@ void my_programm()
 	
 	
 	
-	
-	cv::line(canvas,cv::Point2f(100,100),cv::Point2f(200,200),cv::Scalar(150,150,150),2,1);
-	cv::line(canvas,cv::Point2f(200,200),cv::Point2f(300,200),cv::Scalar(150,150,150),2,1);
-	cv::line(canvas,cv::Point2f(300,200),cv::Point2f(300,300),cv::Scalar(150,150,150),2,1);
+	testbench(layer);
+
 	
 	//----------------------------------------------------------------
-	cv::imshow("Display Output", canvas);       
+	cv::imshow("Display Output", canvas+layer);       
     cv::waitKey(0);
 }
 
