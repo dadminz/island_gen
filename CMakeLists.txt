@@ -1,0 +1,6 @@
+cmake_minimum_required(VERSION 2.8)
+project( island_gen )
+find_package( OpenCV REQUIRED )
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
+add_executable( island_gen island_gen.cpp )
+target_link_libraries( island_gen ${OpenCV_LIBS} )
