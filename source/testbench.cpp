@@ -31,7 +31,8 @@ void testbench(cv::Mat &mat)
 	pointField field;
 	
 	field.genPoints(0,mat.cols,0,mat.rows,10);
-	field.plotField(mat);		
+	field.plotField(mat);
+	field.sortPoints();		
 }
 
 

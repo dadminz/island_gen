@@ -13,6 +13,9 @@ class point2D
 	public:		
 		point2D(float xin, float yin, int ID);	//Constructor
 		cv::Point2f cvp2f();	//returns x and y coords as a cv::point2f
+		static bool compare_x (const std::shared_ptr<point2D> &first, const std::shared_ptr<point2D> &second);
+		static bool compare_y (const std::shared_ptr<point2D> &first, const std::shared_ptr<point2D> &second);
+		static bool compare_pointID (const std::shared_ptr<point2D> &first, const std::shared_ptr<point2D> &second);
 		
 		int pointID;
 		float x;
@@ -33,9 +36,11 @@ class pointField
 	
 	public:
 		pointField();	//Constructor
-		void plotField(cv::Mat &mat);	//Function for plotting the point of the field
-		
+		void plotField(cv::Mat &mat);	//Function for plotting the point of the field	
+		void plotPList();	//Function for plotting the list of points to the console
+			
 		void genPoints(float xmin, float xmax, float ymin, float ymax,int N);	//Function for Generating N Points in limited Area
+		void sortPoints();	//Function for sorting the Points in the PList
 		
 		std::list<std::shared_ptr<point2D>> PList = {};
 	
