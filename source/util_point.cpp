@@ -32,6 +32,20 @@ bool point2D::compare_pointID (const std::shared_ptr<point2D> &first, const std:
 }
 
 //######################################################################
+//Constructor of Edge
+
+//######################################################################
+//Constructor of Triangle
+
+//######################################################################
+//Constructor of ConvexHull
+
+
+
+
+
+
+//######################################################################
 //Constructor of pointField
 
 pointField::pointField()
@@ -47,7 +61,7 @@ void pointField::plotField(cv::Mat &mat)
 	{
 		
 		cv::circle(mat, (*it)->cvp2f(), 3, cv::Scalar(0,0,255), CV_FILLED, CV_FILLED );
-		cv::putText(mat, std::to_string((*it)->pointID) , (*it)->cvp2f(), cv::FONT_HERSHEY_SIMPLEX, 0.4, cv::Scalar(255,255,255), 1);
+		//cv::putText(mat, std::to_string((*it)->pointID) , (*it)->cvp2f(), cv::FONT_HERSHEY_SIMPLEX, 0.4, cv::Scalar(255,255,255), 1);
 	}	
 }
 
@@ -56,8 +70,16 @@ void pointField::plotPList()
 	for (std::list<std::shared_ptr<point2D>>::iterator it = PList.begin(); it != PList.end(); ++it)
 	{
 		std::cout << "ID: " << (*it)->pointID <<" Point: " << (*it)->cvp2f() << std::endl;
-
 	}	
+}
+
+bool pointField::compare_R2 (const std::shared_ptr<point2D> &first, const std::shared_ptr<point2D> &second, const std::shared_ptr<point2D> &Pseed)
+{  
+	if ( ( pow(((first->x)-(Pseed->x)),2) +pow(((first->y) - (Pseed->y)),2) <  pow(((second->x)-(Pseed->x)),2) +pow(((second->y) - (Pseed->y)),2)) )
+	{
+		return true;
+	}
+	return false;	
 }
 
 void pointField::genPoints(float xmin, float xmax, float ymin, float ymax,int N)
@@ -100,10 +122,17 @@ void pointField::sortPoints()
 	PList.sort(point2D::compare_y);
 	plotPList();
 	
+	Pseed = PList.front();
+	std::cout << "Pseed: " << Pseed->cvp2f() << std::endl;	
+	
 	std::cout << std::endl;	
-	std::cout << "sorted List by pointID:" << std::endl;		
-	PList.sort(point2D::compare_pointID);
-	plotPList();			
+	std::cout << "sorted List by R2:" << std::endl;		
+	//PList.sort(compare_R2(Pseed));
+	
+	
+	plotPList();
+	
+		
 }
 
 
