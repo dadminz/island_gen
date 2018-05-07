@@ -8,13 +8,30 @@ geo_point2D::geo_point2D(float tx, float ty,int tid)
 	id = tid;
 }
 //######################################################################
+//2D Edge
+geo_edge2D::geo_edge2D(std::shared_ptr<geo_point2D> A, std::shared_ptr<geo_point2D> B, int tid)
+{std::cout << "calling constructor geo_edge2D(id: "<< tid << " pid1: " << A->id<< " pid2: "<< B->id << ")" << std::endl;
+	
+	id = tid;
+	Pedge.push_back(A);
+	Pedge.push_back(B);
+}
+
+//######################################################################
 //2D Triangle
-geo_triangle2D::geo_triangle2D(std::shared_ptr<geo_point2D> A, std::shared_ptr<geo_point2D> B, std::shared_ptr<geo_point2D> C)	
+geo_triangle2D::geo_triangle2D(std::shared_ptr<geo_edge2D> a, std::shared_ptr<geo_edge2D> b, std::shared_ptr<geo_edge2D> c, int tid)	
 {
 	std::cout << "calling constructor geo_triangle2D()" << std::endl;
-	Ptri.push_back(A);
-	Ptri.push_back(B);
-	Ptri.push_back(C);	
+	id = tid;
+	
+	
+	Etri.push_back(a);
+	Etri.push_back(b);
+	Etri.push_back(c);
+	
+	Ptri.push_back(a->Pedge[0]);
+	Ptri.push_back(b->Pedge[0]);
+	Ptri.push_back(c->Pedge[0]);	
 }
 
 void geo_triangle2D::plot_me(cv::Mat &mat)
@@ -25,7 +42,8 @@ void geo_triangle2D::plot_me(cv::Mat &mat)
 }
 //######################################################################
 //2D Mesh
-geo_mesh2D::geo_mesh2D()
+geo_mesh2D::geo_mesh2D(int tid)
 {
 	std::cout << "calling constructor geo_mesh2D()" << std::endl;
+	id = tid;
 }

@@ -3,6 +3,7 @@
 //######################################################################
 //Prototypes:
 class geo_point2D;
+class geo_edge2D;
 class geo_triangle2D;
 class geo_mesh2D;
 
@@ -17,10 +18,27 @@ class geo_point2D
 		geo_point2D(float tx, float ty,int tid);	//Constructor
 		void plot_me(cv::Mat &mat);
 		
+		int id;
 		float x;	//x-Coord of the Point
 		float y;	//y-Coord of the Point
-		int id;
+		
+		std::vector<std::shared_ptr<geo_edge2D>> ConEdges = {};	
 		std::vector<std::shared_ptr<geo_triangle2D>> ConTriangles = {};	
+};
+//######################################################################
+//2D Edge
+class geo_edge2D
+{	//Class for storing a 2D Edge and associated Data
+	private:
+	
+	public:
+		geo_edge2D(std::shared_ptr<geo_point2D> A, std::shared_ptr<geo_point2D> B, int tid); //Constructor
+		
+		int id;
+		
+		std::vector<std::shared_ptr<geo_point2D>> Pedge = {};	//2 Points defining the Edge
+		std::shared_ptr<geo_edge2D> CommonEdge;					//Edge sharing the same Points as this edge if available
+		std::shared_ptr<geo_triangle2D> ConTriangle;			//Triangle this edge is part of
 };
 
 //######################################################################
@@ -31,13 +49,14 @@ class geo_triangle2D
 	private:
 		
 	public:
-		geo_triangle2D(std::shared_ptr<geo_point2D> A, std::shared_ptr<geo_point2D> B, std::shared_ptr<geo_point2D> C); // Constructor
+		geo_triangle2D(std::shared_ptr<geo_edge2D> a, std::shared_ptr<geo_edge2D> b, std::shared_ptr<geo_edge2D> c, int tid); // Constructor
 		void plot_me(cv::Mat &mat);
 		
+		int id;
 		float MP;	// Meridian Point of the Triangle
 		
 		std::vector<std::shared_ptr<geo_point2D>> Ptri = {};	//3 Points defining the Triangle
-	
+		std::vector<std::shared_ptr<geo_edge2D>> Etri = {};		//3 Edges defining the Triangle
 };
 //######################################################################
 //2D Mesh
@@ -47,7 +66,8 @@ class geo_mesh2D
 	private:
 	
 	public:
-		geo_mesh2D(); // Constructor
+		geo_mesh2D(int tid); // Constructor
 		void plot_me(cv::Mat &mat);
+		int id;
 	
 };
