@@ -17,6 +17,7 @@ class geo_point2D
 	public:
 		geo_point2D(float tx, float ty,int tid);	//Constructor
 		void plot_me(cv::Mat &mat);
+		cv::Point2f cvp2f();						//returns the Point coords as a cv::Point2f object
 		
 		int id;
 		float x;	//x-Coord of the Point
@@ -64,15 +65,29 @@ class geo_triangle2D
 class geo_mesh2D
 {	//Class for storing a 2D Mesh and associated Data
 	private:
+		std::default_random_engine RandGenerator;		
 		int id_point_count;
 		int id_edge_count;
-		int id_triangle_count;
+		int id_triangle_count;		
 	public:
 		geo_mesh2D(int tid); // Constructor
-		void plot_me(cv::Mat &mat);
 		int id_gen_point(); int id_gen_edge(); int id_gen_triangle();
+		void plot_me(cv::Mat &mat);		
 		
-		void test_generator(cv::Mat &mat);
+		//generates a triangle from 3 points and makes all the associations happen
+		void triangle_generator(std::shared_ptr<geo_point2D> p1,std::shared_ptr<geo_point2D> p2,std::shared_ptr<geo_point2D> p3);
+		
+		//function for generating an grid of points
+		void point_grid_generator(int count_x, int count_y, float dx, float dy);		
+		
+		//function for triangulating an grid of points
+		void point_grid_triangulator(int count_x, int count_y);
+		
+		//function for deforming an grid of points
+		void point_grid_DeformerRand(int count_x, int count_y, float dx ,float dy);
+		
+		void summary();		//function for ploting the number of stuff in the mesh
+		void test_generator(cv::Mat &mat);		//test function		
 		
 		int id;		
 		std::vector<std::shared_ptr<geo_point2D>> M_points = {};			//List for Storing all Points of the mesh

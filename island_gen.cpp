@@ -5,6 +5,7 @@ void my_programm()
 {
 	//Initializing the Canvas CV_8UC3 8bits unsigned with 3 color channels Blue Green Red (BGR)
 	cv::Mat canvas = cv::Mat::zeros(cv::Size(1300, 800), CV_8UC3);		
+		
 	//Initializing Mask (Layer)
 	cv::Mat  layer = cv::Mat( canvas.size() , canvas.type() , cv::Scalar(0,0,0) );
 	cv::Mat output = cv::Mat( canvas.size() , canvas.type() , cv::Scalar(0,0,0) );		
